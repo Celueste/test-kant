@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D 자기소개</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle at center, #1a1e29, #0d1017);
+      perspective: 1000px;
+      overflow: hidden;
+    }
+
+    .card-container {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+
+    .card {
+      width: 320px;
+      padding: 30px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      color: #ffffff;
+      transform-style: preserve-3d;
+    }
+
+    /* 동영상 감싸는 원형 틀 */
+    .avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transform: translateZ(50px);
+    }
+
+    /* 원형에 맞춰 영상 채우기 */
+    .avatar video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      transform: translateZ(40px);
+    }
+
+    .role {
+      font-size: 14px;
+      color: #6e8efb;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transform: translateZ(30px);
+    }
+
+    .bio {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #a0aec0;
+      margin-bottom: 24px;
+      transform: translateZ(25px);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      transform: translateZ(35px);
+    }
+
+    .tag {
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      color: #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container" id="cardContainer">
+    <div class="card" id="card">
+      <div class="avatar">
+        <video autoplay loop muted playsinline>
+          <source src="my_cat.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <h1 class="name">김성옥</h1>
+      <p class="role">KANT AX 1기</p>
+      <p class="bio">
+        안녕하세요, 반갑습니다!<br />
+              </p>
+      <div class="tags">
+        <span class="tag">#INTP</span>
+        <span class="tag">#냥집사</span>
+        <span class="tag">#세무/회계</span>
+        <span class="tag">#AX 에이전트 엔지니어</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('cardContainer');
+
+    window.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+      const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+
+      const rotateX = -y * 20;
+      const rotateY = x * 20;
+
+      container.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      container.style.transition = 'transform 0.5s ease';
+      container.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      setTimeout(() => {
+        container.style.transition = 'transform 0.1s ease-out';
+      }, 500);
+    });
+  </script>
+</body>
+</html>
